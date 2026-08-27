@@ -1,0 +1,1570 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Части речи: Местоимение</title>
+<style>
+  :root {
+    --game-bg: linear-gradient(135deg, #E0F7FA 0%, #FFF9C4 100%);
+    --game-card: #FFFFFF;
+    --game-primary: #FF9800;
+    --game-accent: #4CAF50;
+    --game-text: #37474F;
+    --game-success: #00E676;
+    --game-error: #FF1744;
+    --game-muted: #B0BEC5;
+    --font-main: 'Comic Sans MS', 'Chalkboard SE', 'Arial Rounded MT Bold', sans-serif;
+  }
+
+  * {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    font-family: var(--font-main);
+    background: var(--game-bg);
+    color: var(--game-text);
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-x: hidden;
+    touch-action: manipulation;
+  }
+
+  .hidden {
+    display: none !important;
+  }
+
+  /* Top Bar */
+  #top-bar {
+    width: 100%;
+    max-width: 800px;
+    background: var(--game-card);
+    padding: 10px 15px;
+    border-radius: 0 0 20px 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 15px;
+    border-bottom: 4px solid var(--game-accent);
+  }
+
+  .score {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: var(--game-primary);
+  }
+
+  .progress-container {
+    flex: 1;
+    min-width: 100px;
+    height: 18px;
+    background: #ECEFF1;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 0 10px;
+    border: 2px solid var(--game-muted);
+  }
+
+  .progress-bar {
+    height: 100%;
+    background: var(--game-accent);
+    width: 0%;
+    transition: width 0.5s ease-in-out;
+  }
+
+  .task-counter {
+    font-size: 0.9rem;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  /* Screens */
+  .screen {
+    width: 100%;
+    max-width: 800px;
+    padding: 15px;
+    text-align: center;
+    animation: pop 0.4s ease-out;
+  }
+
+  @keyframes pop {
+    0% { transform: scale(0.9); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    75% { transform: translateX(10px); }
+  }
+
+  .shake {
+    animation: shake 0.4s ease-in-out;
+  }
+
+  /* Start Screen */
+  .start-image {
+    max-width: 250px;
+    width: 80%;
+    border-radius: 30px;
+    border: 5px solid var(--game-primary);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    margin-bottom: 20px;
+  }
+
+  h1 {
+    color: var(--game-primary);
+    font-size: 1.6rem;
+    text-shadow: 2px 2px 0px #FFF;
+    margin: 10px 0;
+  }
+
+  p {
+    font-size: 1.1rem;
+    line-height: 1.5;
+  }
+
+  /* Buttons */
+  .btn-primary {
+    background: var(--game-primary);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 18px 35px;
+    font-size: 1.3rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 6px 0 #E65100, 0 10px 10px rgba(0,0,0,0.2);
+    transition: transform 0.1s, box-shadow 0.1s;
+    margin: 10px 5px;
+    font-family: var(--font-main);
+    min-height: 60px;
+    touch-action: manipulation;
+  }
+
+  .btn-primary:active {
+    transform: translateY(4px);
+    box-shadow: 0 2px 0 #E65100, 0 4px 4px rgba(0,0,0,0.2);
+  }
+
+  .btn-primary:disabled {
+    background: var(--game-muted);
+    box-shadow: 0 6px 0 #78909C;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .btn-secondary {
+    background: var(--game-accent);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 15px 25px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 5px 0 #2E7D32, 0 8px 8px rgba(0,0,0,0.2);
+    transition: transform 0.1s, box-shadow 0.1s;
+    margin: 8px 5px;
+    font-family: var(--font-main);
+    min-height: 55px;
+    touch-action: manipulation;
+  }
+
+  .btn-secondary:active {
+    transform: translateY(4px);
+    box-shadow: 0 1px 0 #2E7D32, 0 4px 4px rgba(0,0,0,0.2);
+  }
+
+  /* Cards */
+  .card {
+    background: var(--game-card);
+    border-radius: 25px;
+    padding: 20px;
+    box-shadow: 0 8px 0 rgba(0,0,0,0.05), 0 15px 25px rgba(0,0,0,0.1);
+    border: 4px solid var(--game-accent);
+    margin-bottom: 20px;
+  }
+
+  .stage-header {
+    font-size: 1.5rem;
+    color: var(--game-accent);
+    font-weight: bold;
+    margin-bottom: 15px;
+    text-shadow: 1px 1px 0 #FFF;
+  }
+
+  .timer {
+    font-size: 1.2rem;
+    color: var(--game-error);
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+
+  /* Stage 1: Quiz */
+  .options-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-top: 20px;
+  }
+
+  .option-btn {
+    background: #FFF3E0;
+    border: 3px solid var(--game-primary);
+    border-radius: 15px;
+    padding: 15px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: var(--font-main);
+    color: var(--game-text);
+    min-height: 55px;
+    touch-action: manipulation;
+  }
+
+  .option-btn:hover:not(:disabled) {
+    background: var(--game-primary);
+    color: white;
+    transform: scale(1.02);
+  }
+
+  .option-btn.correct-highlight {
+    background: var(--game-success) !important;
+    color: white !important;
+    border-color: #00C853 !important;
+  }
+
+  .option-btn.error-highlight {
+    background: var(--game-error) !important;
+    color: white !important;
+    border-color: #D50000 !important;
+  }
+
+  .feedback-box {
+    margin-top: 20px;
+    padding: 20px;
+    background: #E8F5E9;
+    border-radius: 15px;
+    border: 3px solid var(--game-accent);
+  }
+
+  /* Stage 2: Find */
+  .find-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin: 15px 0;
+  }
+
+  .find-item {
+    background: var(--game-card);
+    border: 3px solid var(--game-primary);
+    border-radius: 12px;
+    padding: 15px 8px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.3s;
+    box-shadow: 0 4px 0 rgba(0,0,0,0.1);
+    min-height: 55px;
+    touch-action: manipulation;
+  }
+
+  .find-item:hover:not(.found):not(.error) {
+    transform: translateY(-3px);
+    box-shadow: 0 7px 0 rgba(0,0,0,0.1);
+  }
+
+  .find-item.found {
+    background: var(--game-success);
+    color: white;
+    border-color: #00C853;
+    pointer-events: none;
+  }
+
+  .find-item.error {
+    background: var(--game-error);
+    color: white;
+    border-color: #D50000;
+  }
+
+  /* Stage 3: Match */
+  .match-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    position: relative;
+    margin: 20px 0;
+  }
+
+  .match-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .match-item {
+    background: var(--game-card);
+    border: 3px solid var(--game-accent);
+    border-radius: 12px;
+    padding: 12px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    touch-action: manipulation;
+  }
+
+  .match-item:hover:not(.matched) {
+    background: #E8F5E9;
+    transform: scale(1.02);
+  }
+
+  .match-item.selected {
+    background: var(--game-primary);
+    color: white;
+    border-color: #E65100;
+    box-shadow: 0 0 15px rgba(255, 152, 0, 0.5);
+  }
+
+  .match-item.matched {
+    background: var(--game-success);
+    color: white;
+    border-color: #00C853;
+    pointer-events: none;
+  }
+
+  .match-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  /* Stage 4: Mirror */
+  .mirror-container {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin: 15px 0;
+    align-items: flex-start;
+  }
+
+  .mirror-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 3px;
+    background: #90A4AE;
+    padding: 3px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    width: 220px;
+  }
+
+  .mirror-cell {
+    aspect-ratio: 1;
+    background: white;
+    border: 2px solid #CFD8DC;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 0.9rem;
+    color: var(--game-text);
+    user-select: none;
+    touch-action: manipulation;
+  }
+
+  .mirror-cell:hover:not(.filled) {
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    background: #E0F7FA;
+  }
+
+  .mirror-cell.filled {
+    background: #E8F5E9;
+    border-color: var(--game-accent);
+    color: var(--game-accent);
+    font-size: 1rem;
+  }
+
+  .mirror-divider {
+    width: 6px;
+    background: linear-gradient(to bottom, var(--game-primary), var(--game-accent));
+    border-radius: 4px;
+    box-shadow: 0 0 15px rgba(255, 152, 0, 0.5);
+    margin: 0 3px;
+  }
+
+  .palette {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+    margin: 10px 0;
+    flex-wrap: wrap;
+  }
+
+  .palette-item {
+    padding: 8px 10px;
+    border-radius: 20px;
+    border: 3px solid white;
+    background: var(--game-card);
+    cursor: pointer;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+    transition: all 0.2s;
+    font-weight: bold;
+    font-size: 0.9rem;
+    color: var(--game-text);
+    touch-action: manipulation;
+  }
+
+  .palette-item:hover {
+    transform: scale(1.1);
+  }
+
+  .palette-item.selected {
+    border: 3px solid var(--game-primary);
+    background: #FFF3E0;
+    box-shadow: 0 0 15px rgba(255, 152, 0, 0.4);
+    transform: scale(1.1);
+  }
+
+  .selected-pronoun-display {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin: 8px 0;
+    font-size: 1.1rem;
+    font-weight: bold;
+  }
+
+  .selected-pronoun-box {
+    padding: 5px 12px;
+    border-radius: 15px;
+    border: 3px solid var(--game-primary);
+    background: #FFF3E0;
+    color: var(--game-primary);
+    font-weight: bold;
+  }
+
+  .mirror-cell.correct {
+    animation: pulse 0.5s;
+    background: var(--game-success) !important;
+    color: white !important;
+    border-color: #00C853 !important;
+  }
+
+  .mirror-cell.incorrect {
+    animation: shake 0.4s;
+    background: var(--game-error) !important;
+    color: white !important;
+    border-color: #D50000 !important;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+  }
+
+  .mirror-instruction {
+    font-size: 1rem;
+    background: rgba(255,255,255,0.8);
+    padding: 8px;
+    border-radius: 10px;
+    margin-bottom: 8px;
+  }
+
+  /* Overlay */
+  .overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    animation: pop 0.3s ease-out;
+    padding: 20px;
+  }
+
+  .overlay-img {
+    max-width: 90vw;
+    max-height: 40vh;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    border: 5px solid white;
+  }
+
+  .overlay-text {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-top: 20px;
+    text-shadow: 2px 2px 0px white;
+  }
+
+  /* Helper */
+  .helper {
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+    display: flex;
+    align-items: flex-end;
+    z-index: 500;
+    pointer-events: none;
+  }
+
+  .helper img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 4px solid var(--game-primary);
+    background: white;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  }
+
+  .speech-bubble {
+    background: white;
+    border-radius: 20px;
+    padding: 12px;
+    margin-right: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    border: 3px solid var(--game-accent);
+    max-width: 200px;
+    font-size: 1rem;
+    position: relative;
+    pointer-events: auto;
+  }
+
+  .speech-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    right: 30px;
+    border-width: 15px 15px 0;
+    border-style: solid;
+    border-color: var(--game-accent) transparent;
+  }
+
+  /* Modal */
+  .modal {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    padding: 20px;
+  }
+
+  .modal-content {
+    max-width: 500px;
+    width: 100%;
+    max-height: 80vh;
+    overflow-y: auto;
+    text-align: left;
+  }
+
+  .modal-content ul {
+    padding-left: 20px;
+  }
+
+  .modal-content li {
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+  }
+
+  .feedback-image-large {
+    max-width: 200px;
+    width: 80%;
+    border-radius: 20px;
+    margin: 20px 0;
+    border: 4px solid var(--game-accent);
+  }
+
+  .final-stats {
+    background: var(--game-card);
+    padding: 20px;
+    border-radius: 20px;
+    margin: 20px 0;
+    border: 3px solid var(--game-primary);
+    font-size: 1.2rem;
+  }
+
+  .instruction {
+    font-size: 1.1rem;
+    color: var(--game-text);
+    background: rgba(255,255,255,0.7);
+    padding: 10px;
+    border-radius: 10px;
+    display: inline-block;
+  }
+
+  /* Mobile adaptations */
+  @media (max-width: 600px) {
+    .screen {
+      padding: 10px;
+    }
+
+    h1 {
+      font-size: 1.4rem;
+    }
+
+    .find-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .find-item {
+      font-size: 1rem;
+      padding: 12px 6px;
+      min-height: 50px;
+    }
+
+    .match-container {
+      gap: 10px;
+    }
+
+    .match-item {
+      font-size: 0.85rem;
+      padding: 10px;
+      min-height: 45px;
+    }
+
+    .mirror-grid {
+      width: 180px;
+    }
+
+    .mirror-cell {
+      font-size: 0.8rem;
+    }
+
+    .palette-item {
+      padding: 6px 8px;
+      font-size: 0.85rem;
+    }
+
+    .btn-primary {
+      padding: 15px 25px;
+      font-size: 1.2rem;
+      min-height: 55px;
+    }
+
+    .btn-secondary {
+      padding: 12px 20px;
+      font-size: 1rem;
+      min-height: 50px;
+    }
+
+    .task-counter {
+      font-size: 0.8rem;
+    }
+
+    .score {
+      font-size: 1rem;
+    }
+  }
+
+  @media (max-width: 400px) {
+    .mirror-grid {
+      width: 150px;
+    }
+
+    .mirror-cell {
+      font-size: 0.75rem;
+    }
+
+    .find-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .palette {
+      gap: 4px;
+    }
+
+    .palette-item {
+      padding: 5px 6px;
+      font-size: 0.8rem;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <div id="top-bar" class="hidden">
+    <div class="score">Баллы: <span id="score-display">0</span></div>
+    <div class="progress-container">
+      <div class="progress-bar" id="progress-bar"></div>
+    </div>
+    <div class="task-counter">
+      <div>Выполнено: <span id="completed-display">0</span></div>
+      <div>Осталось: <span id="remaining-display">13</span></div>
+    </div>
+  </div>
+
+  <div id="app">
+    <!-- Start Screen -->
+    <div id="start-screen" class="screen">
+      <img src="https://r2.syntx.ai/user_1804534798/uploaded/6606772e151383e602429862df193ec6_8a019c66-d680-4d10-bdda-6f59250054ee_250.jpg" alt="Главный персонаж" class="start-image">
+      <h1>Увлекательное путешествие в мир Местоимений!</h1>
+      <p>Привет! Давай вместе изучим части речи и найдём все местоимения. Тебя ждут 4 увлекательных этапа!</p>
+      <button class="btn-primary" onclick="startGame()">Начать игру</button>
+    </div>
+
+    <!-- Stage 1: Quiz -->
+    <div id="stage-1" class="screen hidden">
+      <div class="stage-header">Этап 1: Викторина</div>
+      <div class="timer">Осталось: <span id="timer-display">30</span> сек</div>
+      <div class="card">
+        <h2 id="q-text">Вопрос</h2>
+        <div id="q-options" class="options-grid"></div>
+      </div>
+      <div id="q-feedback" class="feedback-box hidden">
+        <p id="q-feedback-text"></p>
+        <button class="btn-primary" id="q-next-btn" disabled title="Сначала выполните задание" onclick="nextQuestion()">Дальше</button>
+      </div>
+    </div>
+
+    <!-- Stage 2: Find Object -->
+    <div id="stage-2" class="screen hidden">
+      <div class="stage-header">Этап 2: Найди местоимения</div>
+      <p class="instruction">Найди и нажми на все 5 местоимений среди слов!</p>
+      <div id="s2-grid" class="find-grid"></div>
+      <div id="s2-feedback" class="feedback-box hidden">
+        <p id="s2-feedback-text"></p>
+        <button class="btn-primary" id="s2-next-btn" disabled onclick="goToStage(3)">Дальше</button>
+      </div>
+    </div>
+
+    <!-- Stage 3: Matching -->
+    <div id="stage-3" class="screen hidden">
+      <div class="stage-header">Этап 3: Установи соответствие</div>
+      <p class="instruction">Соедини понятие слева с его определением справа!</p>
+      <div class="match-container">
+        <div id="match-left" class="match-column"></div>
+        <svg id="match-lines" class="match-svg"></svg>
+        <div id="match-right" class="match-column"></div>
+      </div>
+      <div id="s3-feedback" class="feedback-box hidden">
+        <p id="s3-feedback-text"></p>
+        <button class="btn-primary" id="s3-next-btn" disabled onclick="goToStage(4)">Дальше</button>
+      </div>
+    </div>
+
+    <!-- Stage 4: Mirror -->
+    <div id="stage-4" class="screen hidden">
+      <div class="stage-header">Этап 4: Зеркало Наташи</div>
+      <div class="timer">Осталось: <span id="s4-timer-display">45</span> сек</div>
+      <div class="mirror-instruction">Наташа смотрит в волшебное зеркало! Помоги ей увидеть идеальное отражение. Выбери местоимение и заполни правую половину так, чтобы она стала зеркальным отражением левой!</div>
+      <div class="selected-pronoun-display">
+        <span>Выбрано:</span>
+        <div class="selected-pronoun-box" id="selected-pronoun-box">?</div>
+      </div>
+      <div class="palette" id="palette"></div>
+      <div class="mirror-container">
+        <div class="mirror-grid" id="mirror-left"></div>
+        <div class="mirror-divider"></div>
+        <div class="mirror-grid" id="mirror-right"></div>
+      </div>
+      <button class="btn-primary" id="s4-check-btn" onclick="checkMirror()">Проверить</button>
+      <div id="s4-feedback" class="feedback-box hidden">
+        <p id="s4-feedback-text"></p>
+        <button class="btn-primary" id="s4-next-btn" disabled onclick="goToStage(5)">Дальше</button>
+      </div>
+    </div>
+
+    <!-- Stage Complete Screen -->
+    <div id="stage-complete" class="screen hidden">
+      <h2>Этап пройден!</h2>
+      <img src="https://r2.syntx.ai/user_4408218137954426556/generated/ad104a561c5419abc18f483f2e50606a_ece281dd-19d6-4b2c-aeec-3293a21bc944_100.jpg" class="feedback-image-large">
+      <p id="stage-complete-text"></p>
+      <button class="btn-primary" onclick="nextStage()">Перейти к следующему этапу</button>
+    </div>
+
+    <!-- Final Screen -->
+    <div id="final-screen" class="screen hidden">
+      <h2>Миссия выполнена!</h2>
+      <img src="https://r2.syntx.ai/user_4408218137954426556/generated/61c7919715987f763e0f91f790a79f30_5a785a87-7fe2-4a09-8e5e-c164a6f503e6_100.jpg" class="feedback-image-large">
+      <div class="final-stats">
+        <p>Общий счёт: <span id="final-score">0</span> / 17</p>
+        <p>Верных ответов: <span id="final-correct">0</span></p>
+        <p>Оценка: <span id="final-stars">⭐</span></p>
+        <p id="final-missing"></p>
+      </div>
+      <button class="btn-primary" onclick="location.reload()">Играть снова</button>
+      <button class="btn-secondary" onclick="showErrors()">Посмотреть ошибки</button>
+    </div>
+  </div>
+
+  <!-- Feedback Overlay -->
+  <div id="feedback-overlay" class="overlay hidden">
+    <img id="overlay-img" src="" class="overlay-img">
+    <div id="overlay-text" class="overlay-text"></div>
+  </div>
+
+  <!-- Helper Character -->
+  <div id="helper" class="helper hidden">
+    <div class="speech-bubble" id="helper-text">Привет! Я помогу тебе в этом путешествии!</div>
+    <img src="https://r2.syntx.ai/user_4408218137954426556/uploaded/0c7241e9117d11a8cefc384b55001f84_cd4bb912-2051-426e-9db0-82abf01b6f08_250.jpg" alt="Помощник">
+  </div>
+
+  <!-- Error Modal -->
+  <div id="error-modal" class="modal hidden">
+    <div class="modal-content card">
+      <h3>Работа над ошибками</h3>
+      <ul id="error-list"></ul>
+      <button class="btn-primary" onclick="document.getElementById('error-modal').classList.add('hidden')" style="width: 100%; margin: 10px 0 0 0;">Закрыть</button>
+    </div>
+  </div>
+
+<script>
+  const gameState = {
+    currentStage: 0,
+    score: 0,
+    totalTasks: 13,
+    completedTasks: 0,
+    stage1: {
+      currentQuestion: 0,
+      score: 0,
+      errors: 0,
+      answers: [],
+      timer: null,
+      timeLeft: 30
+    },
+    stage2: {
+      found: 0,
+      errors: 0,
+      totalToFind: 5
+    },
+    stage3: {
+      matched: 0,
+      errors: 0,
+      totalPairs: 6,
+      selectedLeft: null,
+      selectedRight: null
+    },
+    stage4: {
+      selectedPronoun: null,
+      grid: [],
+      targetGrid: [],
+      rows: 4,
+      cols: 4,
+      timer: null,
+      timeLeft: 45
+    }
+  };
+
+  const stage1Questions = [
+    {
+      q: "Какое слово является местоимением?",
+      options: ["Я", "Стол", "Бежать", "Красивый"],
+      correct: 0,
+      explanation: "«Я» — это личное местоимение 1-го лица. Оно указывает на говорящего, но не называет его."
+    },
+    {
+      q: "Укажи личное местоимение 3-го лица единственного числа.",
+      options: ["Мы", "Ты", "Он", "Себя"],
+      correct: 2,
+      explanation: "«Он» — это личное местоимение 3-го лица единственного числа мужского рода."
+    },
+    {
+      q: "Какое местоимение указывает на принадлежность предмета?",
+      options: ["Я", "Мой", "Кто", "Этот"],
+      correct: 1,
+      explanation: "«Мой» — это притяжательное местоимение, оно отвечает на вопрос «чей?» и указывает на принадлежность."
+    },
+    {
+      q: "Найди возвратное местоимение.",
+      options: ["Мне", "Себя", "Свой", "Никто"],
+      correct: 1,
+      explanation: "«Себя» — это возвратное местоимение. Оно указывает, что действие направлено на само действующее лицо."
+    },
+    {
+      q: "В каком предложении есть местоимение?",
+      options: ["Солнце светит ярко.", "Она читает интересную книгу.", "Птицы поют в лесу.", "Мальчик рисует дом."],
+      correct: 1,
+      explanation: "В предложении «Она читает интересную книгу» слово «она» является личным местоимением."
+    }
+  ];
+
+  const stage2ItemsBase = [
+    { text: "Я", isTarget: true },
+    { text: "МЫ", isTarget: true },
+    { text: "ОН", isTarget: true },
+    { text: "СЕБЯ", isTarget: true },
+    { text: "МОЙ", isTarget: true },
+    { text: "ДОМ", isTarget: false },
+    { text: "БЕЖАТЬ", isTarget: false },
+    { text: "КРАСИВЫЙ", isTarget: false },
+    { text: "СТОЛ", isTarget: false },
+    { text: "ЧИТАТЬ", isTarget: false },
+    { text: "ЗЕЛЁНЫЙ", isTarget: false },
+    { text: "ДЕРЕВО", isTarget: false },
+    { text: "ПИСАТЬ", isTarget: false },
+    { text: "БЫСТРЫЙ", isTarget: false },
+    { text: "ОКНО", isTarget: false },
+    { text: "СПАТЬ", isTarget: false },
+    { text: "ВЕСЁЛЫЙ", isTarget: false },
+    { text: "КНИГА", isTarget: false },
+    { text: "РИСОВАТЬ", isTarget: false },
+    { text: "СИНИЙ", isTarget: false }
+  ];
+
+  const stage3PairsBase = [
+    { id: 1, left: "Личное местоимение", right: "Указывает на лицо или предмет, но не называет его (я, ты, он)." },
+    { id: 2, left: "Притяжательное местоимение", right: "Обозначает принадлежность предмета (мой, твой, наш)." },
+    { id: 3, left: "Возвратное местоимение", right: "Указывает, что действие направлено на само действующее лицо (себя)." },
+    { id: 4, left: "Указательное местоимение", right: "Указывает на конкретный предмет или его признак (этот, тот)." },
+    { id: 5, left: "Вопросительное местоимение", right: "Служит для задания вопроса о предмете или признаке (кто, что)." },
+    { id: 6, left: "Отрицательное местоимение", right: "Указывает на отсутствие предмета или признака (никто, ничто)." }
+  ];
+
+  const stage4Pronouns = [
+    "Я", "ТЫ", "ОН", "ОНА",
+    "МЫ", "ВЫ", "ОНИ", "СЕБЯ",
+    "МОЙ", "ТВОЙ", "НАШ", "ИХ",
+    "ЭТОТ", "ТОТ", "КТО", "ЧТО"
+  ];
+
+  const helperPhrases = {
+    correct: ["Молодец! Так держать!", "Отлично! Ты всё знаешь!", "Верно! Ты просто супер!", "Замечательно! Продолжай в том же духе!"],
+    incorrect: ["Не расстраивайся, попробуй ещё раз!", "Почти! В следующий раз обязательно получится!", "Ничего страшного, это повод узнать что-то новое!", "Не сдавайся! У тебя всё выйдет!"],
+    timeout: ["Время вышло, но ты справишься со следующим!", "Давай посмотрим на правильный ответ вместе."],
+    final: ["Ты отлично справился с заданием!", "Миссия выполнена! Ты настоящий знаток!"],
+    mirror: ["Отличное отражение!", "Идеальная симметрия!", "Ты мастер зеркал!"]
+  };
+
+  function getRandomPhrase(category) {
+    const phrases = helperPhrases[category];
+    return phrases[Math.floor(Math.random() * phrases.length)];
+  }
+
+  function speak(text) {
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'ru-RU';
+      utterance.rate = 0.85;
+      utterance.pitch = 0.9;
+      window.speechSynthesis.speak(utterance);
+    }
+  }
+
+  function updateHelper(text) {
+    document.getElementById('helper-text').textContent = text;
+    document.getElementById('helper').classList.remove('hidden');
+  }
+
+  function updateProgress() {
+    document.getElementById('score-display').textContent = gameState.score;
+    const pct = (gameState.completedTasks / gameState.totalTasks) * 100;
+    document.getElementById('progress-bar').style.width = pct + '%';
+    document.getElementById('completed-display').textContent = gameState.completedTasks;
+    document.getElementById('remaining-display').textContent = gameState.totalTasks - gameState.completedTasks;
+  }
+
+  function showFeedbackOverlay(isCorrect, stage) {
+    const overlay = document.getElementById('feedback-overlay');
+    const img = document.getElementById('overlay-img');
+    const text = document.getElementById('overlay-text');
+    
+    if (isCorrect) {
+      img.src = "https://r2.syntx.ai/user_4408218137954426556/generated/08219611cff04fa83b9b946e50326950_6a668d2b-11c1-44d0-ac06-5b9e03eac285_100.jpg";
+      text.textContent = "Отлично!";
+      text.style.color = "var(--game-success)";
+    } else {
+      if (stage === 3) {
+        img.src = "https://r2.syntx.ai/user_4408218137954426556/generated/fd7196be15ac10553dc0812815fd45f5_5076dd00-2947-4e4d-8e2c-232dd4e19c92_100.jpg";
+      } else {
+        img.src = "https://r2.syntx.ai/user_4408218137954426556/generated/b78b1b4a505cd8b654c52573590f7c0c_374275b6-9fbe-4e8e-8ea1-c6ec3ffe4dc0_100.jpg";
+      }
+      text.textContent = "Почти! Попробуй ещё раз.";
+      text.style.color = "var(--game-error)";
+    }
+    
+    overlay.classList.remove('hidden');
+    setTimeout(() => {
+      overlay.classList.add('hidden');
+    }, 1500);
+  }
+
+  function startGame() {
+    speak("Привет! Давай начнём наше увлекательное путешествие!");
+    updateHelper("Начинаем! Удачи тебе!");
+    document.getElementById('start-screen').classList.add('hidden');
+    document.getElementById('top-bar').classList.remove('hidden');
+    goToStage(1);
+  }
+
+  function goToStage(stageNum) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
+    gameState.currentStage = stageNum;
+    
+    if (stageNum === 1) {
+      document.getElementById('stage-1').classList.remove('hidden');
+      renderStage1();
+    } else if (stageNum === 2) {
+      document.getElementById('stage-2').classList.remove('hidden');
+      renderStage2();
+    } else if (stageNum === 3) {
+      document.getElementById('stage-3').classList.remove('hidden');
+      renderStage3();
+    } else if (stageNum === 4) {
+      document.getElementById('stage-4').classList.remove('hidden');
+      renderStage4();
+    } else if (stageNum === 5) {
+      showFinalScreen();
+    }
+  }
+
+  function nextStage() {
+    goToStage(gameState.currentStage + 1);
+  }
+
+  let timerInterval;
+
+  function renderStage1() {
+    const q = stage1Questions[gameState.stage1.currentQuestion];
+    document.getElementById('q-text').textContent = q.q;
+    const optionsDiv = document.getElementById('q-options');
+    optionsDiv.innerHTML = '';
+    
+    q.options.forEach((opt, idx) => {
+      const btn = document.createElement('button');
+      btn.className = 'option-btn';
+      btn.textContent = opt;
+      btn.onclick = () => checkStage1Answer(idx);
+      optionsDiv.appendChild(btn);
+    });
+
+    document.getElementById('q-feedback').classList.add('hidden');
+    document.getElementById('q-next-btn').disabled = true;
+    document.getElementById('q-next-btn').title = "Сначала выполните задание";
+    
+    startTimer();
+  }
+
+  function startTimer() {
+    gameState.stage1.timeLeft = 30;
+    document.getElementById('timer-display').textContent = 30;
+    clearInterval(timerInterval);
+    timerInterval = setInterval(() => {
+      gameState.stage1.timeLeft--;
+      document.getElementById('timer-display').textContent = gameState.stage1.timeLeft;
+      if (gameState.stage1.timeLeft <= 0) {
+        clearInterval(timerInterval);
+        handleStage1Timeout();
+      }
+    }, 1000);
+  }
+
+  function checkStage1Answer(index) {
+    clearInterval(timerInterval);
+    const q = stage1Questions[gameState.stage1.currentQuestion];
+    const isCorrect = index === q.correct;
+    const options = document.querySelectorAll('.option-btn');
+    
+    options.forEach(btn => btn.disabled = true);
+    options[q.correct].classList.add('correct-highlight');
+
+    gameState.stage1.answers.push({
+      question: q.q,
+      options: q.options,
+      correct: q.correct,
+      isCorrect: isCorrect
+    });
+
+    if (isCorrect) {
+      gameState.score++;
+      gameState.stage1.score++;
+      showFeedbackOverlay(true, 1);
+      speak("Отлично! " + q.explanation);
+      updateHelper(getRandomPhrase('correct'));
+      document.getElementById('q-feedback-text').textContent = "Верно! " + q.explanation;
+    } else {
+      gameState.stage1.errors++;
+      options[index].classList.add('error-highlight', 'shake');
+      showFeedbackOverlay(false, 1);
+      speak("Почти! Попробуй ещё раз. " + q.explanation);
+      updateHelper(getRandomPhrase('incorrect'));
+      document.getElementById('q-feedback-text').textContent = "Не совсем. " + q.explanation;
+    }
+
+    gameState.completedTasks++;
+    updateProgress();
+    document.getElementById('q-feedback').classList.remove('hidden');
+    const nextBtn = document.getElementById('q-next-btn');
+    nextBtn.disabled = false;
+    nextBtn.title = "";
+  }
+
+  function handleStage1Timeout() {
+    const q = stage1Questions[gameState.stage1.currentQuestion];
+    const options = document.querySelectorAll('.option-btn');
+    options.forEach(btn => btn.disabled = true);
+    options[q.correct].classList.add('correct-highlight');
+    
+    gameState.stage1.errors++;
+    gameState.stage1.answers.push({
+      question: q.q,
+      options: q.options,
+      correct: q.correct,
+      isCorrect: false
+    });
+    
+    showFeedbackOverlay(false, 1);
+    speak("Время вышло. " + q.explanation);
+    updateHelper(getRandomPhrase('timeout'));
+    document.getElementById('q-feedback-text').textContent = "Время вышло. " + q.explanation;
+    
+    gameState.completedTasks++;
+    updateProgress();
+    document.getElementById('q-feedback').classList.remove('hidden');
+    const nextBtn = document.getElementById('q-next-btn');
+    nextBtn.disabled = false;
+    nextBtn.title = "";
+  }
+
+  function nextQuestion() {
+    gameState.stage1.currentQuestion++;
+    if (gameState.stage1.currentQuestion < stage1Questions.length) {
+      renderStage1();
+    } else {
+      document.getElementById('stage-complete-text').textContent = `Ты ответил на ${gameState.stage1.score} из 5 вопросов верно!`;
+      document.getElementById('stage-complete').classList.remove('hidden');
+      speak("Этап пройден! Ты молодец!");
+      updateHelper(getRandomPhrase('final'));
+    }
+  }
+
+  let stage2Items = [];
+
+  function renderStage2() {
+    stage2Items = [...stage2ItemsBase].sort(() => Math.random() - 0.5);
+    const grid = document.getElementById('s2-grid');
+    grid.innerHTML = '';
+    
+    stage2Items.forEach((item, idx) => {
+      const div = document.createElement('div');
+      div.className = 'find-item';
+      div.textContent = item.text;
+      div.id = `s2-item-${idx}`;
+      div.onclick = () => handleStage2Click(idx);
+      grid.appendChild(div);
+    });
+
+    document.getElementById('s2-feedback').classList.add('hidden');
+    document.getElementById('s2-next-btn').disabled = true;
+  }
+
+  function handleStage2Click(index) {
+    if (gameState.stage2.found === 5) return;
+    const item = stage2Items[index];
+    const el = document.getElementById(`s2-item-${index}`);
+    
+    if (item.isTarget) {
+      if (el.classList.contains('found')) return;
+      el.classList.add('found');
+      gameState.stage2.found++;
+      gameState.score++;
+      gameState.completedTasks++;
+      updateProgress();
+      showFeedbackOverlay(true, 2);
+      speak("Отлично! " + getRandomPhrase('correct'));
+      updateHelper(getRandomPhrase('correct'));
+      
+      if (gameState.stage2.found === 5) {
+        setTimeout(() => {
+          document.getElementById('s2-feedback').classList.remove('hidden');
+          document.getElementById('s2-feedback-text').textContent = "Миссия выполнена! Ты нашёл все местоимения!";
+          document.getElementById('s2-next-btn').disabled = false;
+        }, 1500);
+      }
+    } else {
+      el.classList.add('shake', 'error');
+      gameState.stage2.errors++;
+      showFeedbackOverlay(false, 2);
+      speak("Почти! Попробуй ещё раз.");
+      updateHelper(getRandomPhrase('incorrect'));
+      setTimeout(() => {
+        el.classList.remove('shake', 'error');
+        el.style.opacity = '0.3';
+        el.style.pointerEvents = 'none';
+      }, 1000);
+    }
+  }
+
+  let stage3Pairs = [];
+
+  function renderStage3() {
+    stage3Pairs = [...stage3PairsBase];
+    const rightPairs = [...stage3PairsBase].sort(() => Math.random() - 0.5);
+    
+    const leftCol = document.getElementById('match-left');
+    const rightCol = document.getElementById('match-right');
+    leftCol.innerHTML = '';
+    rightCol.innerHTML = '';
+    document.getElementById('match-lines').innerHTML = '';
+
+    stage3Pairs.forEach(p => {
+      const div = document.createElement('div');
+      div.className = 'match-item';
+      div.textContent = p.left;
+      div.dataset.id = p.id;
+      div.dataset.side = 'left';
+      div.onclick = () => handleStage3Click('left', p.id, div);
+      leftCol.appendChild(div);
+    });
+
+    rightPairs.forEach(p => {
+      const div = document.createElement('div');
+      div.className = 'match-item';
+      div.textContent = p.right;
+      div.dataset.id = p.id;
+      div.dataset.side = 'right';
+      div.onclick = () => handleStage3Click('right', p.id, div);
+      rightCol.appendChild(div);
+    });
+
+    gameState.stage3.selectedLeft = null;
+    gameState.stage3.selectedRight = null;
+    document.getElementById('s3-feedback').classList.add('hidden');
+    document.getElementById('s3-next-btn').disabled = true;
+  }
+
+  function handleStage3Click(side, id, element) {
+    if (element.classList.contains('matched')) return;
+
+    if (side === 'left') {
+      if (gameState.stage3.selectedLeft) gameState.stage3.selectedLeft.classList.remove('selected');
+      gameState.stage3.selectedLeft = element;
+      element.classList.add('selected');
+    } else {
+      if (gameState.stage3.selectedRight) gameState.stage3.selectedRight.classList.remove('selected');
+      gameState.stage3.selectedRight = element;
+      element.classList.add('selected');
+    }
+
+    if (gameState.stage3.selectedLeft && gameState.stage3.selectedRight) {
+      const leftId = parseInt(gameState.stage3.selectedLeft.dataset.id);
+      const rightId = parseInt(gameState.stage3.selectedRight.dataset.id);
+
+      if (leftId === rightId) {
+        gameState.stage3.selectedLeft.classList.add('matched');
+        gameState.stage3.selectedRight.classList.add('matched');
+        gameState.stage3.selectedLeft.classList.remove('selected');
+        gameState.stage3.selectedRight.classList.remove('selected');
+        
+        drawLine(gameState.stage3.selectedLeft, gameState.stage3.selectedRight);
+        
+        gameState.stage3.matched++;
+        gameState.score++;
+        gameState.completedTasks++;
+        updateProgress();
+        
+        showFeedbackOverlay(true, 3);
+        speak("Отлично! " + getRandomPhrase('correct'));
+        updateHelper(getRandomPhrase('correct'));
+        
+        gameState.stage3.selectedLeft = null;
+        gameState.stage3.selectedRight = null;
+
+        if (gameState.stage3.matched === 6) {
+          setTimeout(() => {
+            document.getElementById('s3-feedback').classList.remove('hidden');
+            document.getElementById('s3-feedback-text').textContent = "Миссия выполнена! Все пары собраны верно!";
+            document.getElementById('s3-next-btn').disabled = false;
+          }, 1500);
+        }
+      } else {
+        gameState.stage3.selectedLeft.classList.add('shake');
+        gameState.stage3.selectedRight.classList.add('shake');
+        gameState.stage3.errors++;
+        
+        showFeedbackOverlay(false, 3);
+        speak("Почти! Попробуй ещё раз.");
+        updateHelper(getRandomPhrase('incorrect'));
+        
+        const tempLeft = gameState.stage3.selectedLeft;
+        const tempRight = gameState.stage3.selectedRight;
+        
+        setTimeout(() => {
+          tempLeft.classList.remove('shake', 'selected');
+          tempRight.classList.remove('shake', 'selected');
+          gameState.stage3.selectedLeft = null;
+          gameState.stage3.selectedRight = null;
+        }, 1000);
+      }
+    }
+  }
+
+  function drawLine(el1, el2) {
+    const svg = document.getElementById('match-lines');
+    const containerRect = document.querySelector('.match-container').getBoundingClientRect();
+    const rect1 = el1.getBoundingClientRect();
+    const rect2 = el2.getBoundingClientRect();
+    
+    const x1 = rect1.right - containerRect.left;
+    const y1 = rect1.top + rect1.height / 2 - containerRect.top;
+    const x2 = rect2.left - containerRect.left;
+    const y2 = rect2.top + rect2.height / 2 - containerRect.top;
+    
+    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    line.setAttribute('x1', x1);
+    line.setAttribute('y1', y1);
+    line.setAttribute('x2', x2);
+    line.setAttribute('y2', y2);
+    line.setAttribute('stroke', 'var(--game-success)');
+    line.setAttribute('stroke-width', '4');
+    line.setAttribute('stroke-linecap', 'round');
+    line.setAttribute('stroke-dasharray', '1000');
+    line.setAttribute('stroke-dashoffset', '1000');
+    line.style.animation = 'dash 1s linear forwards';
+    
+    const style = document.createElement('style');
+    style.textContent = `@keyframes dash { to { stroke-dashoffset: 0; } }`;
+    document.head.appendChild(style);
+    
+    svg.appendChild(line);
+  }
+
+  let s4TimerInterval;
+
+  function renderStage4() {
+    gameState.stage4.grid = [];
+    for (let i = 0; i < gameState.stage4.rows; i++) {
+      gameState.stage4.grid[i] = [];
+      for (let j = 0; j < gameState.stage4.cols; j++) {
+        gameState.stage4.grid[i][j] = null;
+      }
+    }
+
+    gameState.stage4.targetGrid = [
+      ["Я", "ТЫ", "ОН", "ОНА"],
+      ["МЫ", "ВЫ", "ОНИ", "СЕБЯ"],
+      ["МОЙ", "ТВОЙ", "НАШ", "ИХ"],
+      ["ЭТОТ", "ТОТ", "КТО", "ЧТО"]
+    ];
+
+    const leftGrid = document.getElementById('mirror-left');
+    leftGrid.innerHTML = '';
+    for (let i = 0; i < gameState.stage4.rows; i++) {
+      for (let j = 0; j < gameState.stage4.cols; j++) {
+        const cell = document.createElement('div');
+        cell.className = 'mirror-cell filled';
+        cell.textContent = gameState.stage4.targetGrid[i][j];
+        leftGrid.appendChild(cell);
+      }
+    }
+
+    const rightGrid = document.getElementById('mirror-right');
+    rightGrid.innerHTML = '';
+    for (let i = 0; i < gameState.stage4.rows; i++) {
+      for (let j = 0; j < gameState.stage4.cols; j++) {
+        const cell = document.createElement('div');
+        cell.className = 'mirror-cell';
+        cell.dataset.row = i;
+        cell.dataset.col = j;
+        cell.onclick = () => handleStage4CellClick(i, j, cell);
+        rightGrid.appendChild(cell);
+      }
+    }
+
+    const palette = document.getElementById('palette');
+    palette.innerHTML = '';
+    stage4Pronouns.forEach((pronoun, idx) => {
+      const pronounBtn = document.createElement('div');
+      pronounBtn.className = 'palette-item';
+      pronounBtn.textContent = pronoun;
+      pronounBtn.onclick = () => selectPronoun(idx);
+      palette.appendChild(pronounBtn);
+    });
+
+    selectPronoun(0);
+
+    document.getElementById('s4-feedback').classList.add('hidden');
+    document.getElementById('s4-next-btn').disabled = true;
+    document.getElementById('s4-check-btn').disabled = false;
+
+    startStage4Timer();
+  }
+
+  function startStage4Timer() {
+    gameState.stage4.timeLeft = 45;
+    document.getElementById('s4-timer-display').textContent = 45;
+    clearInterval(s4TimerInterval);
+    s4TimerInterval = setInterval(() => {
+      gameState.stage4.timeLeft--;
+      document.getElementById('s4-timer-display').textContent = gameState.stage4.timeLeft;
+      if (gameState.stage4.timeLeft <= 0) {
+        clearInterval(s4TimerInterval);
+        handleStage4Timeout();
+      }
+    }, 1000);
+  }
+
+  function handleStage4Timeout() {
+    speak("Время вышло. Давай посмотрим на правильное отражение.");
+    updateHelper(getRandomPhrase('timeout'));
+    checkMirror(true);
+  }
+
+  function selectPronoun(pronounIndex) {
+    gameState.stage4.selectedPronoun = stage4Pronouns[pronounIndex];
+    document.getElementById('selected-pronoun-box').textContent = gameState.stage4.selectedPronoun;
+    
+    document.querySelectorAll('.palette-item').forEach((el, idx) => {
+      if (idx === pronounIndex) {
+        el.classList.add('selected');
+      } else {
+        el.classList.remove('selected');
+      }
+    });
+  }
+
+  function handleStage4CellClick(row, col, cell) {
+    if (gameState.stage4.selectedPronoun) {
+      cell.textContent = gameState.stage4.selectedPronoun;
+      cell.classList.add('filled');
+      gameState.stage4.grid[row][col] = gameState.stage4.selectedPronoun;
+    }
+  }
+
+  function checkMirror(isTimeout = false) {
+    clearInterval(s4TimerInterval);
+    let correctCount = 0;
+    const totalCells = gameState.stage4.rows * gameState.stage4.cols;
+    const rightCells = document.querySelectorAll('#mirror-right .mirror-cell');
+
+    const mirroredTarget = gameState.stage4.targetGrid.map(row => [...row].reverse());
+
+    for (let i = 0; i < gameState.stage4.rows; i++) {
+      for (let j = 0; j < gameState.stage4.cols; j++) {
+        const cell = rightCells[i * gameState.stage4.cols + j];
+        const userPronoun = gameState.stage4.grid[i][j];
+        const targetPronoun = mirroredTarget[i][j];
+
+        if (userPronoun === targetPronoun) {
+          cell.classList.add('correct');
+          correctCount++;
+        } else {
+          cell.classList.add('incorrect');
+          setTimeout(() => {
+            cell.textContent = targetPronoun;
+            cell.classList.remove('incorrect');
+            cell.classList.add('correct');
+          }, 500);
+        }
+      }
+    }
+
+    gameState.completedTasks++;
+    updateProgress();
+
+    setTimeout(() => {
+      if (correctCount === totalCells) {
+        gameState.score++;
+        showFeedbackOverlay(true, 4);
+        speak("Отлично! Идеальная симметрия! " + getRandomPhrase('mirror'));
+        updateHelper(getRandomPhrase('mirror'));
+        document.getElementById('s4-feedback-text').textContent = "Великолепно! Ты создал идеальное отражение!";
+      } else {
+        showFeedbackOverlay(false, 4);
+        speak("Почти! Попробуй ещё раз.");
+        updateHelper(getRandomPhrase('incorrect'));
+        if (isTimeout) {
+          document.getElementById('s4-feedback-text').textContent = `Время вышло. Правильно заполнено ${correctCount} из ${totalCells} клеток. Посмотри на правильное отражение!`;
+        } else {
+          document.getElementById('s4-feedback-text').textContent = `Правильно заполнено ${correctCount} из ${totalCells} клеток. Посмотри на правильное отражение и запомни его!`;
+        }
+      }
+
+      document.getElementById('s4-feedback').classList.remove('hidden');
+      document.getElementById('s4-check-btn').disabled = true;
+      document.getElementById('s4-next-btn').disabled = false;
+    }, 1000);
+  }
+
+  function showFinalScreen() {
+    document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
+    document.getElementById('final-screen').classList.remove('hidden');
+    
+    const totalPoints = 17;
+    const score = gameState.score;
+    let stars = 0;
+    let missing = 0;
+    
+    if (score >= 17) {
+      stars = 3;
+      missing = 0;
+    } else if (score >= 13) {
+      stars = 2;
+      missing = 17 - score;
+    } else if (score >= 9) {
+      stars = 1;
+      missing = 13 - score;
+    } else {
+      stars = 0;
+      missing = 9 - score;
+    }
+    
+    const starString = "⭐".repeat(stars) || "☆";
+    document.getElementById('final-score').textContent = score;
+    document.getElementById('final-correct').textContent = score;
+    document.getElementById('final-stars').textContent = starString;
+    
+    if (missing > 0) {
+      document.getElementById('final-missing').textContent = `До следующей награды не хватило ${missing} верных ответов. Попробуй пройти игру ещё раз!`;
+    } else {
+      document.getElementById('final-missing').textContent = `Идеальный результат! Ты собрал все награды!`;
+    }
+    
+    speak("Миссия выполнена! " + getRandomPhrase('final'));
+    updateHelper(getRandomPhrase('final'));
+  }
+
+  function showErrors() {
+    const list = document.getElementById('error-list');
+    list.innerHTML = '';
+    const errors = gameState.stage1.answers.filter(a => !a.isCorrect);
+    
+    if (errors.length === 0) {
+      list.innerHTML = '<li>Ошибок нет! Ты молодец!</li>';
+    } else {
+      errors.forEach(e => {
+        const li = document.createElement('li');
+        li.innerHTML = `<strong>${e.question}</strong><br><span style="color: var(--game-success)">Правильный ответ: ${e.options[e.correct]}</span>`;
+        list.appendChild(li);
+      });
+    }
+    document.getElementById('error-modal').classList.remove('hidden');
+  }
+</script>
+</body>
+</html>
